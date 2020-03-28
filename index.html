@@ -1,0 +1,188 @@
+<html>
+
+<link href="knapper.css" rel="stylesheet">
+
+
+
+
+<head>
+    <title>Høidalens Bibliotek</title>
+
+</head>
+
+
+
+
+
+<p><img src="B%C3%B8ker.jpg" id="logo" align="right"></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+
+<h1>Augusts Bibliotek</h1>
+
+<h2>Under leverer du og vurderer
+    boken du har lånt av mitt bibliotek! :)</h2>
+
+
+
+
+<body>
+
+    <form>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tittel:
+        <input type="text" id="Tittel" placeholder="&nbsp;Tittel">
+        <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Utgivelsesår:
+
+            <select id="Utgivelsesår">
+                <option>2020</option>
+                <option>2019</option>
+                <option>2018</option>
+                <option>2017</option>
+                <option>2016</option>
+                <option>2015</option>
+                <option>2014</option>
+                <option>2013</option>
+                <option>2012</option>
+                <option>2011</option>
+                <option>2010</option>
+                <option>2009</option>
+                <option>2008</option>
+                <option>2007</option>
+                <option>2006</option>
+                <option>2005</option>
+                <option>2004</option>
+                <option>2003</option>
+                <option>2002</option>
+                <option>2001</option>
+                <option>2000</option>
+                <option>1999</option>
+                <option>1998</option>
+                <option>1997</option>
+                <option>1996</option>
+                <option>1995</option>
+                <option>1994</option>
+                <option>1993</option>
+                <option>1992</option>
+                <option>1991</option>
+                <option>1990</option>
+                <option>1989</option>
+                <option>1988</option>
+                <option>1987</option>
+                <option>1986</option>
+                <option>1985</option>
+                <option>1984</option>
+                <option>1983</option>
+                <option>1982</option>
+                <option>1981</option>
+                <option>1980</option>
+
+
+
+            </select>
+        </p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Forfatter:
+        <input type="text" id="Navnpåforfatter" placeholder="&nbsp;Navn på forfatter">
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Forlag:
+            <input type="text" id="Forlag" placeholder="&nbsp;Forlag">
+        </p>
+        <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Terningkast:
+            <select id="Terningkast">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+            </select>
+        </p>
+        <input type="button" value="Lever!" id="Lever" onclick="leggInn()">
+
+        <p></p>
+
+        <input type="button" value="GitHub" id="github" onclick="sendToGithub()">
+
+
+
+    </form>
+
+    <div id="navneliste">
+    </div>
+    <p><img src="bok.gif" id="bok"></p>
+
+
+
+    <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-database.js"></script>
+
+
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyAomMQgsEUDnldo6RQ_O-87dxMf7AbvKaY",
+            authDomain: "augustsbibliotek.firebaseapp.com",
+            databaseURL: "https://augustsbibliotek.firebaseio.com",
+            projectId: "augustsbibliotek",
+            storageBucket: "augustsbibliotek.appspot.com",
+            messagingSenderId: "239869668836",
+            appId: "1:239869668836:web:b2827b57c0a9d4795d6bf1"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        let db = firebase.database();
+
+        let bibliotek = db.ref("bibliotek");
+
+        function sendToGithub() {
+            window.location = "https://github.com/alhoi/augustsbilbiotek.github.io";
+
+        }
+
+
+
+
+        function leggInn() {
+            let navneliste_in = document.getElementById("navneliste");
+            var tittel_in = document.getElementById("Tittel").value;
+            var utgivelsesår_in = document.getElementById("Utgivelsesår").value;
+            var navn_på_forfatter_in = document.getElementById("Navnpåforfatter").value;
+            var forlag_in = document.getElementById("Forlag").value;
+            var terningkast_in = document.getElementById("Terningkast").value;
+
+
+
+            navneliste_in.bibliotekrHTML += `<div>${utgivelsesår_in}. ${tittel_in}: ${navn_på_forfatter_in}. ${forlag_in}. ${terningkast_in}</div>`
+
+
+
+            bibliotek.push({
+                //tittel : tittel_in, utgivelsesår : utgivelsesår_in, navn_på_forfatter_ : navn_på_forfatter_in, forlag : forlag_in, terningkast : terningkast_in
+            })
+
+            window.alert("Takk! Boken er nå levert!");
+            console.log(Tittel)
+
+            let new_object = bibliotek.child(tittel_in);
+
+
+
+            new_object.set({
+
+                Tittel: tittel_in,
+                Utgivelsesår: utgivelsesår_in,
+                Navnpåforfatter: navn_på_forfatter_in,
+                Forlag: forlag_in,
+                Terningkast: terningkast_in,
+
+
+            })
+        }
+
+    </script>
+
+</body>
+
+
+
+
+
+
+</html>
